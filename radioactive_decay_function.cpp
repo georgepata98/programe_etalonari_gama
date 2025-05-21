@@ -34,6 +34,7 @@ double ZAIDfind(int zaid) {
       }
       if (ZA_ID == zaid) {
         halfLife = hLife;
+        break; // oprire loop dupa gasirea lui zaid dat de la tastatura
         aux = 1;
       }
     }
