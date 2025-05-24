@@ -1,0 +1,90 @@
+----- FOND -----
+A = 5
+Valori masurate:
+1. 1582
+2. 1507
+3. 1479
+4. 1599
+5. 1510
+6. 1566
+7. 1498
+8. 1549
+9. 1510
+10. 1550
+Valoarea medie: 1535.0
+Abaterea individuala, s_n-1: 39.75759885439093
+Abaterea medie, s_n: 12.572456667917637
+s_n (%): 0.8190525516558721 %
+T_masurare (s): 100.0
+R_fond (imp/s): 15.35
+
+----- SURSA ETALON -----
+CE/indicativ: SEG 8-467
+Geometrie: Volum (gel)
+Radionuclid: Cs-137
+Valori masurate:
+1. 8210
+2. 8359
+3. 8264
+4. 8270
+5. 8156
+6. 8313
+7. 8362
+8. 8156
+9. 8223
+10. 8373
+Valoarea medie: 8268.6
+Abaterea individuala, s_n-1: 82.09777368750291
+Abaterea medie, s_n: 25.961595568154983
+s_n (%): 0.31397812892333626 %
+u_fond (%): 0.1867122589390168 %
+T_masurare (s): 100.0
+N'_gama (imp/s): 82.686
+Valoarea conv. adev.:
+N_gama (s^-1): 67.40442632495106
+A_CE, Bq adusa la data masurarii (la zi): 1038.0
+Incert. (Bq), k=2: 52.0
+Incert. (%), k=1: 2.5048169556840074 %
+CE, k=2: 5.009633911368015 %
+
+----- SURSA BENEFICIAR -----
+CE/indicativ: SEG 8-396
+Geometrie: Volum (apa)
+Radionuclid: Cs-137
+Valori masurate:
+1. 904
+2. 821
+3. 868
+4. 898
+5. 910
+6. 827
+7. 846
+8. 914
+9. 844
+10. 918
+Valoarea medie: 875.0
+Abaterea individuala, s_n-1: 38.05843460317889
+Abaterea medie, s_n: 12.035133752661181
+s_n (%): 1.3754438574469923 %
+u_fond (%): 0.1742544236717621 %
+T_masurare (s): 10.0
+N'_gama (imp/s): 87.5
+Valoarea conv. adev.:
+N_gama (s^-1): 72.226629550857
+A_masurata (Bq): 1112.2599146880877
+Incert. (Bq), k=2: 64.20259483681288
+Incert. (%): 5.772265456030326 %
+A_CE, Bq adusa la data masurarii (la zi): 1115.0
+Incert. (Bq), k=2: 62.0
+Incert. (%): 5.560538116591928 %
+
+deltaA: -0.2457475616064801 %
+
+A_CA (Bq): 1112.2599146880877
+Incert. (Bq), k=2: 64.20259483681288
+Incert. (%): 5.772265456030326%
+MEDIA: 1113.6299573440438
+Incert., k=2: 64.2816773357755
+Incert. (%): 5.772265456030326 %
+
+END.
