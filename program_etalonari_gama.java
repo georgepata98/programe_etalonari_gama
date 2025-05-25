@@ -402,7 +402,7 @@ public class program_etalonari_gama
       writer.write("Incert. (Bq), k=2: " + s_n_masurat * A_masurata);
       writer.newLine();
 
-      writer.write("Incert. (%): "+ s_n_masurat * 100 + "%");
+      writer.write("Incert. (%): "+ s_n_masurat * 100 + " %");
       writer.newLine();
 
       writer.write("MEDIA: " + (A_masurata + A_beneficiar) / 2);
