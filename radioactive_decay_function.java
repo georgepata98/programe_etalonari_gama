@@ -258,7 +258,7 @@ public class radioactive_decay_function
     System.out.print("yyyy (ex: 2020): ");
     year0 = scanner.nextInt();
     System.out.print("Activitatea la data din CE: ");
-    A0 = scanner.nextInt();
+    A0 = scanner.nextDouble();
     System.out.println("\nData cand s-au efectuat masuratorile (mm/dd/yyyy):");
     System.out.print("mm: ");
     month1 = scanner.nextInt();
