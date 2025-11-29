@@ -189,7 +189,7 @@
         <input type="date" id="ceDate">
       </div>
       <div class="input-group">
-        <label for="A0">Activitatea la data CE</label>
+        <label for="A0">Activitatea la data din CE</label>
         <input type="number" id="A0" step="any" placeholder="Ex: 1000">
       </div>
     </div>
@@ -210,7 +210,7 @@
         <div class="result-value" id="halfLifeResult">-</div>
       </div>
       <div class="result-item">
-        <div class="result-label">Număr de zile</div>
+        <div class="result-label">Numărul de zile dintre cele două date</div>
         <div class="result-value" id="daysResult">-</div>
       </div>
       <div class="result-item">
@@ -456,7 +456,7 @@
 
       // Display results
       resultsDiv.classList.add('show');
-      halfLifeResult.textContent = `${halfLifeYears} ani (${halfLifeDays.toFixed(4)} zile)`;
+      halfLifeResult.textContent = `T1/2 = ${halfLifeYears} ani (${halfLifeDays.toFixed(4)} zile)`;
       daysResult.textContent = `${days} zile`;
       activityResult.textContent = `${activity}`;
     }
