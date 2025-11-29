@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator Dezintegrare Radioactivă</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 28px;
+      text-align: center;
+    }
+
+    .subtitle {
+      color: #666;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+
+    .section {
+      margin-bottom: 25px;
+    }
+
+    .section-title {
+      color: #667eea;
+      font-weight: 600;
+      margin-bottom: 15px;
+      font-size: 18px;
+      border-bottom: 2px solid #667eea;
+      padding-bottom: 5px;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      color: #555;
+      margin-bottom: 5px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    input[type="number"],
+    input[type="date"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    input[type="number"]:focus,
+    input[type="date"]:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .date-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #888;
+      margin-top: 3px;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .results {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f8f9ff;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .results.show {
+      display: block;
+      animation: fadeIn 0.5s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-item {
+      margin-bottom: 15px;
+      padding: 10px;
+      background: white;
+      border-radius: 8px;
+      border-left: 4px solid #667eea;
+    }
+
+    .result-label {
+      font-weight: 600;
+      color: #667eea;
+      font-size: 14px;
+    }
+
+    .result-value {
+      color: #333;
+      font-size: 18px;
+      margin-top: 5px;
+    }
+
+    .error {
+      background: #fee;
+      border-left-color: #f44;
+    }
+
+    .error .result-label {
+      color: #f44;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculator Dezintegrare Radioactivă</h1>
+    <p class="subtitle">Calculează activitatea radionuclidului la o dată specifică</p>
+
+    <div class="section">
+      <div class="section-title">Date Radionuclid</div>
+      <div class="input-group">
+        <label for="zaid">ZAID (Z*1000+A)</label>
+        <input type="number" id="zaid" placeholder="Ex: 27060 pentru Co-60">
+        <div class="hint">Exemplu: ZAID(⁶⁰Co) = 27*1000+60 = 27060</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Certificat de Etalonare (CE)</div>
+      <div class="input-group">
+        <label for="ceDate">Data din CE</label>
+        <input type="date" id="ceDate">
+      </div>
+      <div class="input-group">
+        <label for="A0">Activitatea la data CE</label>
+        <input type="number" id="A0" step="any" placeholder="Ex: 1000">
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Data Măsurărilor</div>
+      <div class="input-group">
+        <label for="measureDate">Data măsurărilor</label>
+        <input type="date" id="measureDate">
+      </div>
+    </div>
+
+    <button onclick="calculate()">Calculează Activitatea</button>
+
+    <div class="results" id="results">
+      <div class="result-item">
+        <div class="result-label">Timpul de înjumătățire</div>
+        <div class="result-value" id="halfLifeResult">-</div>
+      </div>
+      <div class="result-item">
+        <div class="result-label">Număr de zile</div>
+        <div class="result-value" id="daysResult">-</div>
+      </div>
+      <div class="result-item">
+        <div class="result-label">Activitatea la data măsurărilor</div>
+        <div class="result-value" id="activityResult">-</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Database with ZAID and half-life in years (from zaid_data.txt)
+    const zaidData = {
+      1003: 12.312,
+      6014: 5700,
+      27060: 5.2710,
+      55137: 30.018,
+      56133: 10.539,
+      95241: 432.6,
+      63152: 13.522,
+      55134: 2.0644,
+      53131: 0.0219670674,
+      27057: 0.744163738,
+      88226: 1600,
+      86222: 0.0104675747,
+      38090: 28.8,
+      92233: 159200,
+      96244: 18.11,
+      11022: 2.6029,
+      92238: 4468000000,
+      92234: 245500,
+      94239: 24100,
+      48109: 1.26464029,
+      58139: 0.376848569,
+      25054: 0.854583619,
+      50113: 0.315105977,
+      39088: 0.291932313,
+      80203: 0.127570144,
+      26055: 2.747,
+      38085: 0.177553416
+    };
+
+    function radioactiveDecay(initialAmount, halfLife, time) {
+      const lambda = Math.log(2) / halfLife;
+      const remainingAmount = initialAmount * Math.exp(-lambda * time);
+      return remainingAmount;
+    }
+
+    function timeCalc(day0, month0, year0, day1, month1, year1) {
+      let ndays = 0;
+      let dpermonth = new Array(12);
+      
+      dpermonth[0] = 31;
+      if (4 * Math.floor(year0 / 4) != year0) {
+        // an nedivizibil cu 4 (365 zile)
+        dpermonth[1] = 28;
+      } else if (4 * Math.floor(year0 / 4) == year0) {
+        // an bisect, divizibil cu 4 (366 zile)
+        dpermonth[1] = 29;
+      }
+      dpermonth[2] = 31;
+      dpermonth[3] = 30;
+      dpermonth[4] = 31;
+      dpermonth[5] = 30;
+      dpermonth[6] = 31;
+      dpermonth[7] = 31;
+      dpermonth[8] = 30;
+      dpermonth[9] = 31;
+      dpermonth[10] = 30;
+      dpermonth[11] = 31;
+
+      if (year1 > year0) {
+        // Calcularea nr. de zile ramase din luna
+        if (month0 == 1) {
+          ndays = 31 - day0 + 1;
+        }
+        if (month0 == 2) {
+          if (4 * Math.floor(year0 / 4) != year0) {
+            ndays = 28 - day0 + 1;
+          } else if (4 * Math.floor(year0 / 4) == year0) {
+            ndays = 29 - day0 + 1;
+          }
+        }
+        if (month0 == 3) {
+          ndays = 31 - day0 + 1;
+        }
+        if (month0 == 4) {
+          ndays = 30 - day0 + 1;
+        }
+        if (month0 == 5) {
+          ndays = 31 - day0 + 1;
+        }
+        if (month0 == 6) {
+          ndays = 30 - day0 + 1;
+        }
+        if (month0 == 7) {
+          ndays = 31 - day0 + 1;
+        }
+        if (month0 == 8) {
+          ndays = 31 - day0 + 1;
+        }
+        if (month0 == 9) {
+          ndays = 30 - day0 + 1;
+        }
+        if (month0 == 10) {
+          ndays = 31 - day0 + 1;
+        }
+        if (month0 == 11) {
+          ndays = 30 - day0 + 1;
+        }
+        if (month0 == 12) {
+          ndays = 31 - day0 + 1;
+        }
+
+        // Calcularea nr. de zile pana la finalul anului din CE
+        for (let i = month0 + 1; i <= 12; i++) {
+          ndays += dpermonth[i - 1];
+        }
+
+        // Calcularea nr. de zile pana la anul in care s-au facut masuratorile
+        for (let i = year0 + 1; i < year1; i++) {
+          if (4 * Math.floor(i / 4) != i) {
+            ndays += 365;
+          } else if (4 * Math.floor(i / 4) == i) {
+            ndays += 366;
+          }
+        }
+
+        // Calcularea restului de zile care au trecut din anul in care s-au facut masuratorile
+        ndays += day1 - 1;
+
+        if (4 * Math.floor(year1 / 4) != year1) {
+          dpermonth[1] = 28;
+        } else if (4 * Math.floor(year1 / 4) == year1) {
+          dpermonth[1] = 29;
+        }
+
+        for (let i = month1 - 1; i > 0; i--) {
+          ndays += dpermonth[i - 1];
+        }
+      }
+
+      if (year1 == year0) {
+        if (month1 == month0) {
+          ndays = day1 - day0;
+        } else if (month1 != month0) {
+          if (month0 == 1) {
+            ndays = 31 - day0 + 1;
+          }
+          if (month0 == 2) {
+            if (4 * Math.floor(year0 / 4) != year0) {
+              ndays = 28 - day0 + 1;
+            } else if (4 * Math.floor(year0 / 4) == year0) {
+              ndays = 29 - day0 + 1;
+            }
+          }
+          if (month0 == 3) {
+            ndays = 31 - day0 + 1;
+          }
+          if (month0 == 4) {
+            ndays = 30 - day0 + 1;
+          }
+          if (month0 == 5) {
+            ndays = 31 - day0 + 1;
+          }
+          if (month0 == 6) {
+            ndays = 30 - day0 + 1;
+          }
+          if (month0 == 7) {
+            ndays = 31 - day0 + 1;
+          }
+          if (month0 == 8) {
+            ndays = 31 - day0 + 1;
+          }
+          if (month0 == 9) {
+            ndays = 30 - day0 + 1;
+          }
+          if (month0 == 10) {
+            ndays = 31 - day0 + 1;
+          }
+          if (month0 == 11) {
+            ndays = 30 - day0 + 1;
+          }
+          if (month0 == 12) {
+            ndays = 31 - day0 + 1;
+          }
+        }
+        for (let i = month0 + 1; i <= month1; i++) {
+          if (i < month1) {
+            ndays += dpermonth[i - 1];
+          } else if (i == month1) {
+            ndays += day1 - 1;
+          }
+        }
+      }
+
+      return ndays;
+    }
+
+    function calculate() {
+      const zaid = parseInt(document.getElementById('zaid').value);
+      const ceDate = new Date(document.getElementById('ceDate').value);
+      const measureDate = new Date(document.getElementById('measureDate').value);
+      const A0 = parseFloat(document.getElementById('A0').value);
+
+      const resultsDiv = document.getElementById('results');
+      const halfLifeResult = document.getElementById('halfLifeResult');
+      const daysResult = document.getElementById('daysResult');
+      const activityResult = document.getElementById('activityResult');
+
+      // Validation
+      if (!zaid || !ceDate || !measureDate || !A0) {
+        alert('Vă rugăm să completați toate câmpurile!');
+        return;
+      }
+
+      // Find half-life
+      const halfLifeYears = zaidData[zaid];
+      if (!halfLifeYears) {
+        resultsDiv.classList.add('show');
+        halfLifeResult.innerHTML = '<span style="color: #f44;">ZAID nu a fost găsit în baza de date!</span>';
+        daysResult.textContent = '-';
+        activityResult.textContent = '-';
+        return;
+      }
+
+      // Convert half-life to days
+      const halfLifeDays = halfLifeYears * 365.2422;
+
+      // Extract day, month, year from dates
+      const day0 = ceDate.getDate();
+      const month0 = ceDate.getMonth() + 1; // JavaScript months are 0-indexed
+      const year0 = ceDate.getFullYear();
+      
+      const day1 = measureDate.getDate();
+      const month1 = measureDate.getMonth() + 1;
+      const year1 = measureDate.getFullYear();
+
+      // Calculate days between dates using your Java logic
+      const days = timeCalc(day0, month0, year0, day1, month1, year1);
+
+      // Calculate activity
+      const activity = radioactiveDecay(A0, halfLifeDays, days);
+
+      // Display results
+      resultsDiv.classList.add('show');
+      halfLifeResult.textContent = `${halfLifeYears} ani (${halfLifeDays.toFixed(4)} zile)`;
+      daysResult.textContent = `${days} zile`;
+      activityResult.textContent = `${activity}`;
+    }
+
+    // Set today's date as default for measurement date
+    document.getElementById('measureDate').valueAsDate = new Date();
+  </script>
+</body>
+</html>
